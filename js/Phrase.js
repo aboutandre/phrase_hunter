@@ -11,7 +11,7 @@ class Phrase {
             let letter = '';
 
             if (phrase[i] === ' ') {
-                letter = `<li class="hide space ${phrase[i]}">${phrase[i]}</li>`;
+                letter = `<li class="hide show space ${phrase[i]}">${phrase[i]}</li>`;
             } else {
                 letter = `<li class="hide letter ${phrase[i]}">${phrase[i]}</li>`;
             }

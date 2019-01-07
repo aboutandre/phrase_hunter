@@ -103,12 +103,6 @@ button {
   border-radius: 5px;
 }
 
-.space {
-  width: 15px;
-}
-
-
-
 .show {
   color: #fff;
   background-color: #4ac0d5;
@@ -205,4 +199,9 @@ button {
 
 .is-hidden {
   display: none !important;
+}
+
+.space {
+  background-color: transparent;
+  width: 15px;
 }
