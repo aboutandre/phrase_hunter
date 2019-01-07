@@ -124,7 +124,7 @@ button {
   justify-content: center;
 }
 
-.chosen {
+:disabled {
   background: #3a3f58;
   border-radius: 5px;
   font-size: var(--font-size-medium);
