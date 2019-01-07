@@ -1,24 +1,25 @@
 class Game {
-    constructor(missed = 0, phrases) {
-        this.missed = missed;
-        this.phrases = [];
+    constructor() {
+        this.missed = 0;
+        this.phrases = ['hello how are you', 'only a flesh wound', 'meme', 'javascript is awesome'];
+        this.chosenPhrase = '';
     }
+
     getRandomPhrase() {
-        const randomPhrase = this.phrases[Math.floor(Math.random() * this.phrases.length)];
+        const randomPhrase = Math.floor(Math.random() * this.phrases.length);
         return this.phrases[randomPhrase];
-    }
-    get randomPhrase() {
-        return this._randomPhrase;
-    }
-    set randomPhrase(randomPhrase) {
-        this._randomPhrase = randomPhrase;
     }
 
     handleInteraction(letterPressed) {
-        if (this.missed < 5) {
-            this.removeLife();
+        const letterInPhrase = this.chosenPhrase.checkLetter(letterPressed);
+
+        if (letterInPhrase) {
+            console.log(`The letter pressed was ${letterInPhrase}`);
+            this.chosenPhrase.showMatchedLetter(letterPressed);
+            this.checkForWin();
         } else {
-            this.gameOver();
+            event.target.classList.add('wrong');
+            this.removeLife();
         }
     }
 
@@ -27,19 +28,35 @@ class Game {
         heart.parentNode.removeChild(heart);
         this.missed++;
         console.log('You have made ' + this.missed + ' mistakes!');
+        if (this.missed === 5) {
+            this.gameOver(`Oh noes! No more lives left! The phrase was: "${this.chosenPhrase.phrase}"`);
+        }
     }
 
     checkForWin() {
+        const lettersShown = document.querySelectorAll('.show').length;
+        const lettersTotal = this.chosenPhrase.phrase.length;
 
+        if (lettersTotal === lettersShown) {
+            this.gameOver('You won! Keep on rockin!');
+        }
     }
 
-    gameOver() {
+    gameOver(message) {
         console.log('You lost!');
+        document.getElementById('game-over-message').innerHTML = message;
+        document.getElementById('overlay').classList.toggle('is-hidden');
+        document.getElementById('btn__reset').textContent = 'Reset Game';
     }
 
     startGame() {
-        const chosenPhrase = this.getRandomPhrase();
-        this.randomPhrase = chosenPhrase;
-        chosenPhrase.addPhraseToDisplay();
+        if (startGameButton.textContent === 'Reset Game') {
+            window.location.reload(true);
+        }
+        overlay.classList.toggle('is-hidden');
+        const phrase = this.getRandomPhrase();
+        console.log(phrase);
+        this.chosenPhrase = new Phrase(phrase);
+        this.chosenPhrase.addPhraseToDisplay();
     }
 }
